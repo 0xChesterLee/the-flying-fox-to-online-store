@@ -13,7 +13,7 @@ def requestGetResponse(url):
     # Set the response encoding to UTF-8
     response.encoding = 'utf-8'
     # For Safe
-    time.sleep(1)
+    time.sleep(0.1)
     return response
 
 def getCollectionsURLs():
@@ -101,12 +101,12 @@ def downloadImage(url):
     response = requestGetResponse(url)
     if not response:
         return None
-    # Skip Download Image Again If Exist
+    # Skip Download Image Again If File Exist
     if os.path.exists(fileName):
-        print('Image Already Exist.')
+        print('Image Already Exist.', fileName)
         return fileName
     # Write Image To File
     with open(fileName, "wb") as file:
         file.write(response.content)
-    print("Image downloaded and saved as", os.path.basename(url))
+    print('Image downloaded and saved as', fileName)
     return fileName
