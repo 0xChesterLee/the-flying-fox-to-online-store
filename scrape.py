@@ -76,6 +76,7 @@ def extractCollectionProductsData(url):
 def urlToFileName(url):
     fileName = str(os.path.basename(url))
     fileName = fileName.rsplit('?')[0]
+    fileName = fileName.lower()
     return fileName
 
 def fixTags(collectionProductsData):
