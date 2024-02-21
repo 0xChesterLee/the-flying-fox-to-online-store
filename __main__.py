@@ -1,12 +1,13 @@
 import scrape
 import json
+import pprint
 
 # Main
 productsData = []
 for url in scrape.getCollectionsURLs():
     collectionProductsData = scrape.extractCollectionProductsData(url)
-    if collectionProductsData:
-        productsData.append(collectionProductsData)
+    productsData.extend(collectionProductsData)
+
 
 # Save the updated product data to a JSON file
 with open('output.json', 'w') as file:

@@ -1,4 +1,9 @@
 
+# Download Image When Scraping
+IMAGES_DOWNLOAD = True
+RESIZE_IMAGES_WIDTH = 512
+RESIZE_IMAGES_HEIGHT = 512
+
 # The Folder Name Of Holding Images
 IMAGES_FOLDER_NAME = 'images'
 
@@ -11,3 +16,5 @@ TFF_BASE_FRONTEND_URL = 'https://www.theflyingfox.com.hk'
 # The-Flying-Fox End Point
 TFF_COLLECTIONS_ENDPOINT = 'collections.json'
 TFF_PRODUCTS_ENDPOINT = 'products.json'
+
+
