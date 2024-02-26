@@ -1,6 +1,11 @@
 
-# Download Image When Scraping
+# Program Logic Control
+SCRAPE_HANDLER = False
+SCRAPED_SAVE2DB_HANDLER = False
 IMAGES_DOWNLOAD = True
+
+
+# Resize Image Size When Scraping
 RESIZE_IMAGES_WIDTH = 512
 RESIZE_IMAGES_HEIGHT = 512
 
@@ -17,4 +22,8 @@ TFF_BASE_FRONTEND_URL = 'https://www.theflyingfox.com.hk'
 TFF_COLLECTIONS_ENDPOINT = 'collections.json'
 TFF_PRODUCTS_ENDPOINT = 'products.json'
 
+# Scraped JSON File Name
+SCRAPED_JSON_FILENAME = 'ScrapedProductsData.json'
 
+# System SQLite Database File Name
+DB_FILENAME = 'Database.db'
