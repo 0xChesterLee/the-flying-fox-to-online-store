@@ -18,9 +18,8 @@ if sys.argv[1:][0].upper() == 'SCRAPE':
         json.dump(productsData, file, indent=4, ensure_ascii=False)
     print("Scrape JSON File Saved.")
     # Save Scraped Data JSON to Database
-    if misc.SCRAPED_SAVE2DB_HANDLER:
-        database.json2Database(misc.SCRAPED_JSON_FILENAME,misc.DB_SCRAPE_TABLE_NAME,True)
-        print("Scrape Database Data Saved.")
+    database.json2Database(misc.SCRAPED_JSON_FILENAME,misc.DB_SCRAPE_TABLE_NAME,True)
+    print("Scrape Database Data Saved.")
 elif sys.argv[1:][0].upper() == 'REWRITE':
     # Get All Products Data Scraped
     productsData = []
@@ -81,8 +80,8 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             print("Rewrite JSON File Saved.")
 
             # OpenAI Official Rules
-            print('[Official Rules] Waiting For The Next Rewrite, Please Wait...')
-            time.sleep(21)
+            print('[Official Waiting Rules] Waiting For The Next Rewrite, Please Wait...')
+            time.sleep(300)
             
     # Save Rewrite Data JSON to Database
     database.json2Database(misc.REWRITE_JSON_FILENAME,misc.DB_REWRITE_TABLE_NAME,True)
