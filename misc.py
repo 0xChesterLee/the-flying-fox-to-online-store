@@ -2,7 +2,7 @@
 # Program Logic Control
 SCRAPE_HANDLER = False
 SCRAPED_SAVE2DB_HANDLER = False
-REWRITE_SAVE2DB_HANDLER = True
+REWRITE_SAVE2DB_HANDLER = False
 AI_PRODUCT_REWRITER = True
 IMAGES_DOWNLOAD = True
 
@@ -33,3 +33,6 @@ REWRITE_JSON_FILENAME = 'RewriteProductsData.json'
 DB_FILENAME = 'data.db'
 DB_SCRAPE_TABLE_NAME = 'scrape_data'
 DB_REWRITE_TABLE_NAME = 'rewrite_data'
+
+# OpenAI API Key File Name
+OPENAI_API_KEY_FILE_NAME = '.openai-secret'

@@ -3,6 +3,7 @@ import json
 import scrape
 import database
 import rewriter
+import time
 
 # Main Program Logic
 
@@ -39,27 +40,30 @@ if misc.AI_PRODUCT_REWRITER and productsData:
     for productData in productsData:
         # Prepair All Params To-Be Rewrite
         id = int(productData['id'])
-        title = str(productData['title'])
-        body = str(productData['body_html'])
+        originalTitle = str(productData['title'])
+        originalBody = str(productData['body_html'])
+        originalTags = str(productData['tags'])
         vendor = str(productData['vendor'])
-        tags = str(productData['tags'])
         price = float(productData['price'])
         images = str(productData['images'])
 
         # Use AI Rewriter To Rewrite The Product Information
         # TO-DO
-        data = rewriter.productRewriter(title, body, tags)
+        data = rewriter.productRewriter(originalTitle, originalBody, originalTags)
         title = data['title']
         body = data['body']
         tags = data['tags']
-        print(f'Rewrited Product {id} - {title} - {body[:20]}')
+        print(f'Rewrited Product Information {id} - {title} - {tags} - {body}\n\n')
 
         # Define Product Data Dict
         ProductData = {'id': id,
+                       'originalTitle': originalTitle,
+                       'originalBody': originalBody,
+                       'originalTags': originalTags,
                        'title': title,
                        'body': body,
-                       'vendor': vendor,
                        'tags': tags,
+                       'vendor': vendor,
                        'price': price,
                        'images': images}
         
@@ -68,6 +72,10 @@ if misc.AI_PRODUCT_REWRITER and productsData:
 
         # Update Rewrite Status To 1
         database.updateValue(misc.DB_SCRAPE_TABLE_NAME,'rewrite',1,f'id={id}')
+
+        # OpenAI Official Rules
+        print('Waiting For The Next Rewrite, Please Wait...')
+        time.sleep(20+1)
 
     # Save Rewrite Product data to a JSON file
     with open(misc.REWRITE_JSON_FILENAME, 'w') as file:
