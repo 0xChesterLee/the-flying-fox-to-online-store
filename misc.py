@@ -1,9 +1,4 @@
-
-# Program Logic Control
-SCRAPE_HANDLER = True
-SCRAPED_SAVE2DB_HANDLER = True
-REWRITE_SAVE2DB_HANDLER = True
-AI_PRODUCT_REWRITER = True
+# Download Images When Scraping
 IMAGES_DOWNLOAD = True
 
 # Resize Image Size When Scraping
