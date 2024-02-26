@@ -6,7 +6,7 @@ import sqlite3
 
 def json2Database(jsonFileName, tableName, isDropTable):
     # Fix File Name Path First
-    jsonFileName = os.path.join(os.getcwd(),misc.SCRAPED_JSON_FILENAME)
+    jsonFileName = os.path.join(os.getcwd(),jsonFileName)
     DB_FILENAME = os.path.join(os.getcwd(),misc.DB_FILENAME)
     # Open the JSON file
     with open(jsonFileName, 'r') as file:
@@ -36,7 +36,7 @@ def json2Database(jsonFileName, tableName, isDropTable):
     conn.commit()
     conn.close()
 
-def getValues(tableName, columns, condition=None):
+def getValues(tableName, columns, condition=None, groupBy=None):
     try:
         # Fix File Name Path First
         DB_FILENAME = os.path.join(os.getcwd(), misc.DB_FILENAME)
@@ -50,6 +50,8 @@ def getValues(tableName, columns, condition=None):
         select_query = f'SELECT {columns_str} FROM {tableName}'
         if condition:
             select_query += f' WHERE {condition}'
+        if groupBy:
+            select_query += f' GROUP BY {groupBy}'
         # Execute the SELECT query
         cursor.execute(select_query)
         # Fetch all the rows returned by the SELECT query
@@ -65,10 +67,8 @@ def getValues(tableName, columns, condition=None):
             result.append(row_dict)
         # Close the connection
         conn.close()
-        # Convert the result list to a JSON string
-        json_result = json.dumps(result)
-        # Return the JSON string
-        return json_result
+        # Return the result list
+        return result
     except sqlite3.Error as e:
         print('An error occurred:', e)
         return None
@@ -92,7 +92,6 @@ def updateValue(tableName, column, newValue, condition=None):
         conn.commit()
         # Close the connection
         conn.close()
-        print('Value updated successfully.')
         return True
     except sqlite3.Error as e:
         print('An error occurred:', e)

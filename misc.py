@@ -2,8 +2,9 @@
 # Program Logic Control
 SCRAPE_HANDLER = False
 SCRAPED_SAVE2DB_HANDLER = False
+REWRITE_SAVE2DB_HANDLER = True
+AI_PRODUCT_REWRITER = True
 IMAGES_DOWNLOAD = True
-
 
 # Resize Image Size When Scraping
 RESIZE_IMAGES_WIDTH = 512
@@ -22,8 +23,13 @@ TFF_BASE_FRONTEND_URL = 'https://www.theflyingfox.com.hk'
 TFF_COLLECTIONS_ENDPOINT = 'collections.json'
 TFF_PRODUCTS_ENDPOINT = 'products.json'
 
-# Scraped JSON File Name
+# Scraped Products Data JSON File Name
 SCRAPED_JSON_FILENAME = 'ScrapedProductsData.json'
 
+# Rewrite Products Data JSON File Name
+REWRITE_JSON_FILENAME = 'RewriteProductsData.json'
+
 # System SQLite Database File Name
-DB_FILENAME = 'Database.db'
+DB_FILENAME = 'data.db'
+DB_SCRAPE_TABLE_NAME = 'scrape_data'
+DB_REWRITE_TABLE_NAME = 'rewrite_data'

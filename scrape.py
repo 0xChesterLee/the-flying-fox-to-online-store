@@ -78,7 +78,8 @@ def extractCollectionProductsData(url):
                        'tags': data['tags'],
                        'sku': data['variants'][-1]['sku'],
                        'price': float(data['variants'][-1]['price']),
-                       'images': images
+                       'images': images,
+                       'rewrite': 0
                        }
         # Fix Tags Issue
         ProductData = fixTags(ProductData)
