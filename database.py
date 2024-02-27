@@ -4,7 +4,7 @@ import json
 import sqlite3
 
 
-def json2Database(jsonFileName, tableName, primarykey, isDropTable):
+def json2Database(jsonFileName, tableName, primaryKey, isDropTable):
     # Fix File Name Path First
     jsonFileName = os.path.join(os.getcwd(),jsonFileName)
     DB_FILENAME = os.path.join(os.getcwd(),misc.DB_FILENAME)
@@ -21,7 +21,8 @@ def json2Database(jsonFileName, tableName, primarykey, isDropTable):
     # Extract the keys from the first JSON object to determine the column names
     keys = list(data[0].keys())
     # Generate the CREATE TABLE statement dynamically
-    create_table_query = f'CREATE TABLE IF NOT EXISTS {tableName} ({primarykey} INTEGER PRIMARY KEY UNIQUE, {", ".join(keys)})'
+    create_table_keys = [s for s in keys if s != primaryKey]
+    create_table_query = f'CREATE TABLE IF NOT EXISTS {tableName} ({primaryKey} INTEGER PRIMARY KEY UNIQUE, {", ".join(create_table_keys)})'
     # Create the table
     cursor.execute(create_table_query)
     # Insert the data into the table
@@ -60,8 +61,8 @@ def database2JSON(tableName, jsonFileName):
         row_data = dict(zip(column_names, row))
         data.append(row_data)
     # Save the data as JSON to the specified file
-    with open(jsonFileName, 'w') as file:
-        json.dump(data, file)
+    with open(jsonFileName, 'w', encoding='utf-8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
     # Close the connection
     conn.close()
 

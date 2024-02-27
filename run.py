@@ -7,6 +7,7 @@ import rewriter
 import time
 import os
 
+
 # Main Program
 if sys.argv[1:][0].upper() == 'SCRAPE':
     productsData = []
@@ -17,7 +18,7 @@ if sys.argv[1:][0].upper() == 'SCRAPE':
     with open(misc.SCRAPED_JSON_FILENAME, 'w') as file:
         json.dump(productsData, file, indent=4, ensure_ascii=False)
     # Save Scraped Data JSON to Database
-    database.json2Database(misc.SCRAPED_JSON_FILENAME,'id',misc.DB_SCRAPE_TABLE_NAME,True)
+    database.json2Database(misc.SCRAPED_JSON_FILENAME,misc.DB_SCRAPE_TABLE_NAME,'id',True)
     print("Scrape Database Data Saved.")
     # Save Scraped Database to JSON
     database.database2JSON(misc.DB_SCRAPE_TABLE_NAME,misc.SCRAPED_JSON_FILENAME)
@@ -82,7 +83,7 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             print("Rewrite JSON File Saved.")
 
             # OpenAI Official Rules
-            print('[Official Waiting Rules] Waiting For The Next Rewrite, Please Wait...')
+            print('[Official Waiting Rules 480s] Waiting For The Next Rewrite, Please Wait...')
             time.sleep(480)
             
     # Save Rewrite Data JSON to Database

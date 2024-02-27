@@ -15,7 +15,7 @@ def requestGetResponse(url):
     # Set the response encoding to UTF-8
     response.encoding = 'utf-8'
     # For Safe
-    time.sleep(0.25)
+    time.sleep(0.5)
     return response
 
 def getCollectionsURLs():
@@ -146,6 +146,7 @@ def downloadImage(url, fileName):
     with open(fileName, "wb") as file:
         file.write(response.content)
     print('Image Downloaded: ',baseName)
+    time.sleep(0.5)
     return baseName
 
 def convertImage(fileName):
