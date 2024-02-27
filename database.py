@@ -4,7 +4,7 @@ import json
 import sqlite3
 
 
-def json2Database(jsonFileName, tableName, isDropTable):
+def json2Database(jsonFileName, tableName, primarykey, isDropTable):
     # Fix File Name Path First
     jsonFileName = os.path.join(os.getcwd(),jsonFileName)
     DB_FILENAME = os.path.join(os.getcwd(),misc.DB_FILENAME)
@@ -21,7 +21,7 @@ def json2Database(jsonFileName, tableName, isDropTable):
     # Extract the keys from the first JSON object to determine the column names
     keys = list(data[0].keys())
     # Generate the CREATE TABLE statement dynamically
-    create_table_query = f'CREATE TABLE IF NOT EXISTS {tableName} ({', '.join(keys)})'
+    create_table_query = f'CREATE TABLE IF NOT EXISTS {tableName} ({primarykey} INTEGER PRIMARY KEY UNIQUE, {", ".join(keys)})'
     # Create the table
     cursor.execute(create_table_query)
     # Insert the data into the table
@@ -30,10 +30,39 @@ def json2Database(jsonFileName, tableName, isDropTable):
         insert_query = f'INSERT INTO {tableName} ({', '.join(keys)}) VALUES ({', '.join(['?'] * len(keys))})'
         # Convert any lists to a string representation
         values = [str(item[key]) if isinstance(item[key], list) else item[key] for key in keys]
-        # Execute the INSERT statement
-        cursor.execute(insert_query, tuple(values))
+        # Execute the INSERT statement and handle the IntegrityError
+        try:
+            cursor.execute(insert_query, tuple(values))
+        except sqlite3.IntegrityError:
+            print(f'ERROR: {insert_query}')
+            pass  # Ignore the error and continue to the next row
     # Commit the changes and close the connection
     conn.commit()
+    conn.close()
+
+def database2JSON(tableName, jsonFileName):
+    # Fix File Name Path First
+    jsonFileName = os.path.join(os.getcwd(), jsonFileName)
+    DB_FILENAME = os.path.join(os.getcwd(), misc.DB_FILENAME)
+    # Connect to the SQLite database
+    conn = sqlite3.connect(DB_FILENAME)
+    # Create a cursor object to interact with the database
+    cursor = conn.cursor()
+    # Fetch all rows from the table
+    cursor.execute(f'SELECT * FROM {tableName}')
+    rows = cursor.fetchall()
+    # Get column names from the cursor description
+    column_names = [desc[0] for desc in cursor.description]
+    # Prepare a list to hold the converted data
+    data = []
+    # Convert each row into a dictionary
+    for row in rows:
+        row_data = dict(zip(column_names, row))
+        data.append(row_data)
+    # Save the data as JSON to the specified file
+    with open(jsonFileName, 'w') as file:
+        json.dump(data, file)
+    # Close the connection
     conn.close()
 
 def getValues(tableName, columns, condition=None, groupBy=None):

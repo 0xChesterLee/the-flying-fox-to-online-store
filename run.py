@@ -16,10 +16,12 @@ if sys.argv[1:][0].upper() == 'SCRAPE':
     # Save Updated product data to a JSON file
     with open(misc.SCRAPED_JSON_FILENAME, 'w') as file:
         json.dump(productsData, file, indent=4, ensure_ascii=False)
-    print("Scrape JSON File Saved.")
     # Save Scraped Data JSON to Database
-    database.json2Database(misc.SCRAPED_JSON_FILENAME,misc.DB_SCRAPE_TABLE_NAME,True)
+    database.json2Database(misc.SCRAPED_JSON_FILENAME,'id',misc.DB_SCRAPE_TABLE_NAME,True)
     print("Scrape Database Data Saved.")
+    # Save Scraped Database to JSON
+    database.database2JSON(misc.DB_SCRAPE_TABLE_NAME,misc.SCRAPED_JSON_FILENAME)
+    print("Scrape JSON File Saved.")
 elif sys.argv[1:][0].upper() == 'REWRITE':
     # Get All Products Data Scraped
     productsData = []
