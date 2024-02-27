@@ -83,7 +83,7 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             print("Rewrite JSON File Saved.")
 
             # OpenAI Official Rules
-            print('[Official Waiting Rules 480s] Waiting For The Next Rewrite, Please Wait...')
+            print('[Official Waiting Rules] Waiting For The Next Rewrite, Please Wait...')
             time.sleep(480)
             
     # Save Rewrite Data JSON to Database
