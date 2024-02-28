@@ -84,10 +84,10 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
 
             # OpenAI Official Rules
             print('[Official Waiting Rules] Waiting For The Next Rewrite, Please Wait...')
-            time.sleep(480)
+            time.sleep(432+1)
             
     # Save Rewrite Data JSON to Database
-    database.json2Database(misc.REWRITE_JSON_FILENAME,misc.DB_REWRITE_TABLE_NAME,True)
+    database.json2Database(misc.REWRITE_JSON_FILENAME,misc.DB_REWRITE_TABLE_NAME,'id',True)
     print("Rewrite Database Data Saved.")
 else:
     print('Param Error.')

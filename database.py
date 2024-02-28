@@ -35,7 +35,6 @@ def json2Database(jsonFileName, tableName, primaryKey, isDropTable):
         try:
             cursor.execute(insert_query, tuple(values))
         except sqlite3.IntegrityError:
-            print(f'ERROR: {insert_query}')
             pass  # Ignore the error and continue to the next row
     # Commit the changes and close the connection
     conn.commit()
@@ -100,7 +99,6 @@ def getValues(tableName, columns, condition=None, groupBy=None):
         # Return the result list
         return result
     except sqlite3.Error as e:
-        print('An error occurred:', e)
         return None
 
 def updateValue(tableName, column, newValue, condition=None):
@@ -124,5 +122,4 @@ def updateValue(tableName, column, newValue, condition=None):
         conn.close()
         return True
     except sqlite3.Error as e:
-        print('An error occurred:', e)
         return False

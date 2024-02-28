@@ -3,7 +3,9 @@ import ast
 import misc
 import openai
 
+
 rewriterPrompt = '請使用繁體中文重寫以下文字，每段文章需要有80%以上的繁體中文字，但保留"TITLE:"，"BODY:"和"TAGS:"，並將重寫後的內容輸出。\n\nTITLE:{0}\n\nBODY:{1}\n\nTAGS:{2}\n\n'
+
 
 def productRewriter(title, body, tags):
     OPENAI_API_KEY_FILE_NAME = os.path.join(os.getcwd(),misc.OPENAI_API_KEY_FILE_NAME)
@@ -22,16 +24,28 @@ def productRewriter(title, body, tags):
     response = response.choices[0].message.content.strip()
 
     productRewriter = {}
+    # Get Title String
     productRewriter['title'] = response.split('TITLE:')[1].split('\n')[0]
+    # Get Body String
     productRewriter['body'] = response.split('BODY:')[1]
-
+    # Get Tags String
     tags_start_index = response.find('TAGS:')
     if tags_start_index != -1:
         tags_end_index = response.find('\n', tags_start_index)
         productRewriter['tags'] = response[tags_start_index + len('TAGS:'):tags_end_index].strip()
     else:
         productRewriter['tags'] = ''
-
+    
+    # Fix Body String
+    if "TAGS:" in str(productRewriter['body']):
+        # Find the index of "TAGS:"
+        index = str(productRewriter['body']).index("TAGS:")
+        # Remove leading space and the portion after "TAGS:"
+        productRewriter['body'] = str(productRewriter['body'])[:index].strip()
+    else:
+        # If "TAGS:" does not exist, use the original string
+        productRewriter['body'] = str(productRewriter['body']).strip()
+    
     return productRewriter
 
 

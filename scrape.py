@@ -1,4 +1,5 @@
 import misc
+import database
 import requests
 import bs4
 import os
@@ -68,6 +69,11 @@ def extractCollectionProductsData(url):
             fileName = convertImage(fileName)
             # Append List
             images.append(fileName)
+        # Get The Rewrite Status
+        if database.getValues(misc.DB_SCRAPE_TABLE_NAME,['rewrite'],f'id={data['id']}','id') == []:
+            rewrite = 0
+        else:
+            rewrite = 1
         # Define Dict For Product Data
         ProductData = {'id': int(data['id']),
                        'title': data['title'],
@@ -79,7 +85,7 @@ def extractCollectionProductsData(url):
                        'sku': data['variants'][-1]['sku'],
                        'price': float(data['variants'][-1]['price']),
                        'images': images,
-                       'rewrite': 0
+                       'rewrite': rewrite
                        }
         # Fix Tags Issue
         ProductData = fixTags(ProductData)
