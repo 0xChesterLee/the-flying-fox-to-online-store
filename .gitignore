@@ -1,6 +1,13 @@
 .openai-secret
 .carousell-secret
 
+.venv-win
+.venv-mac
+
+images/
+
+.DS_Store
+
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
