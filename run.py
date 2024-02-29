@@ -6,6 +6,32 @@ import database
 import rewriter
 import time
 import os
+import ast
+
+
+def FinalFixJsonFormat(json_file):
+    with open(json_file, encoding='utf-8') as f:
+        data = json.load(f)
+
+    for item in data:
+        try:
+            item['title'] = str(item['title']).strip()
+            item['body'] = str(item['body']).strip()
+            item['originalTags'] = ast.literal_eval(item['originalTags'])
+            item['tags'] = str(item['tags']).strip()
+            item['tags'] = str(item['tags']).replace('，',',')
+            item['tags'] = str(item['tags']).replace(",", "','")
+            item['tags'] = f"['{item['tags']}']"
+            item['tags'] = ast.literal_eval(item['tags'])
+            item['images'] = ast.literal_eval(item['images'])
+        except Exception as e:
+            # print(e)
+            continue
+
+    with open(json_file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    
+    return True
 
 
 # Main Program
@@ -51,11 +77,11 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             originalTags = str(productData['tags'])
             vendor = str(productData['vendor'])
             price = float(productData['price'])
-            images = str(productData['images'])
+            images = productData['images']
             # Use AI Rewriter To Rewrite The Product Information
             data = rewriter.productRewriter(originalTitle, originalBody, originalTags)
-            title = data['title']
-            body = data['body']
+            title = str(data['title'])
+            body = str(data['body'])
             tags = data['tags']
             print(f'Rewrited Product Information {id} - {title} - {tags} - {body}\n\n')
             # Define Product Data Dict
@@ -85,7 +111,10 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             # OpenAI Official Rules
             print('[Official Waiting Rules] Waiting For The Next Rewrite, Please Wait...')
             time.sleep(432+1)
-            
+    
+    FinalFixJsonFormat(misc.REWRITE_JSON_FILENAME)
+    print("Final Fixed Rewrite JSON File Saved.")
+    
     # Save Rewrite Data JSON to Database
     database.json2Database(misc.REWRITE_JSON_FILENAME,misc.DB_REWRITE_TABLE_NAME,'id',True)
     print("Rewrite Database Data Saved.")
