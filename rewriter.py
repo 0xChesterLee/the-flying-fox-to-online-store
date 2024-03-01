@@ -4,7 +4,28 @@ import misc
 import openai
 
 
-rewriterPrompt = '請使用繁體中文重寫以下文字，每段文章需要有80%以上的繁體中文字，但保留"TITLE:"，"BODY:"和"TAGS:"，並將重寫後的內容輸出。\n\nTITLE:{0}\n\nBODY:{1}\n\nTAGS:{2}\n\n'
+rewriterPrompt = '請使用繁體中文重寫以下文字，但保留"TITLE:"、"TAGS:"和"BODY:"。"TITLE:"和"BODY:"需要保留70%以上的繁體中文字、"TAGS:"需要保留100%的繁體中文字，並將重寫後的內容輸出。在重寫後的"TAGS:"內容上，根據"BODY:"後的內容額外生成最多6個主題標籤。如果重寫後的"TAGS:"內容為空白，請自行生成最多6個主題標籤，主題標籤不需要加上"#"字符號，但請用逗號分隔。\nTITLE:{0}\nTAGS:{2}\nBODY:{1}'
+
+
+def extract_strings(text):
+    title = ""
+    body = ""
+    tags = ""
+
+    lines = text.split("\n")
+    is_body = False
+    for line in lines:
+        if line.startswith("TITLE:"):
+            title = line.lstrip("TITLE:").strip()
+        elif line.startswith("BODY:"):
+            is_body = True
+            body = line.lstrip("BODY:").strip()
+        elif line.startswith("TAGS:"):
+            tags = line.lstrip("TAGS:").strip()
+        elif is_body:
+            body += line.strip()
+
+    return title, body, tags
 
 
 def productRewriter(title, body, tags):
@@ -19,32 +40,15 @@ def productRewriter(title, body, tags):
 
     response = openai.chat.completions.create(model='gpt-3.5-turbo',
                                               messages=messages,
-                                              temperature=0.7)
+                                              temperature=0.8,
+                                              max_tokens=4096)
+    
+    print(f'\n\n{response}\n\n')
     
     response = response.choices[0].message.content.strip()
 
     productRewriter = {}
-    # Get Title String
-    productRewriter['title'] = response.split('TITLE:')[1].split('\n')[0]
-    # Get Body String
-    productRewriter['body'] = response.split('BODY:')[1]
-    # Get Tags String
-    tags_start_index = response.find('TAGS:')
-    if tags_start_index != -1:
-        tags_end_index = response.find('\n', tags_start_index)
-        productRewriter['tags'] = response[tags_start_index + len('TAGS:'):tags_end_index].strip()
-    else:
-        productRewriter['tags'] = ''
-    
-    # Fix Body String
-    if "TAGS:" in str(productRewriter['body']):
-        # Find the index of "TAGS:"
-        index = str(productRewriter['body']).index("TAGS:")
-        # Remove leading space and the portion after "TAGS:"
-        productRewriter['body'] = str(productRewriter['body'])[:index].strip()
-    else:
-        # If "TAGS:" does not exist, use the original string
-        productRewriter['body'] = str(productRewriter['body']).strip()
+    productRewriter['title'], productRewriter['body'], productRewriter['tags'] = extract_strings(response)
     
     return productRewriter
 

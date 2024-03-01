@@ -12,25 +12,31 @@ import ast
 def FinalFixJsonFormat(json_file):
     with open(json_file, encoding='utf-8') as f:
         data = json.load(f)
-
     for item in data:
+     
+        item['title'] = str(item['title']).strip()
+        item['body'] = str(item['body']).strip()
         try:
-            item['title'] = str(item['title']).strip()
-            item['body'] = str(item['body']).strip()
             item['originalTags'] = ast.literal_eval(item['originalTags'])
-            item['tags'] = str(item['tags']).strip()
-            item['tags'] = str(item['tags']).replace('，',',')
-            item['tags'] = str(item['tags']).replace(",", "','")
-            item['tags'] = f"['{item['tags']}']"
-            item['tags'] = ast.literal_eval(item['tags'])
+        except Exception as e:
+            pass
+        item['tags'] = str(item['tags']).strip()
+        item['tags'] = str(item['tags']).replace('，',',')
+        item['tags'] = str(item['tags']).replace(', ',',')
+        try:
+            if item['tags'][0] != '[' and item['tags'][-1] != ']':
+                item['tags'] = str(item['tags']).split(',')
+            else:
+                item['tags'] = ast.literal_eval(item['tags'])
+        except Exception as e:
+            pass
+
+        try:
             item['images'] = ast.literal_eval(item['images'])
         except Exception as e:
-            # print(e)
-            continue
-
+            pass
     with open(json_file, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-    
     return True
 
 
@@ -75,15 +81,16 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             originalTitle = str(productData['title'])
             originalBody = str(productData['body_html'])
             originalTags = str(productData['tags'])
-            vendor = str(productData['vendor'])
+            vendor = productData['vendor']
             price = float(productData['price'])
             images = productData['images']
             # Use AI Rewriter To Rewrite The Product Information
+            print(f'Prepair To Rewrite {id}:{originalTitle}\n')
             data = rewriter.productRewriter(originalTitle, originalBody, originalTags)
-            title = str(data['title'])
-            body = str(data['body'])
+            title = data['title']
+            body = data['body']
             tags = data['tags']
-            print(f'Rewrited Product Information {id} - {title} - {tags} - {body}\n\n')
+            print(f'Rewrited Product Information ({id}) - ({title}) - ({tags})\n\n{body}\n\n\n\n')
             # Define Product Data Dict
             ProductData = {'id': id,
                         'originalTitle': originalTitle,
@@ -110,7 +117,7 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
 
             # OpenAI Official Rules
             print('[Official Waiting Rules] Waiting For The Next Rewrite, Please Wait...')
-            time.sleep(432+1)
+            time.sleep(60)
     
     FinalFixJsonFormat(misc.REWRITE_JSON_FILENAME)
     print("Final Fixed Rewrite JSON File Saved.")
