@@ -12,7 +12,7 @@ from PIL import Image
 def requestGetResponse(url):
     # Make the HTTPS request and retrieve the JSON response
     response = requests.get(url,
-                            headers={'User-Agent': misc.SCRAPE_USER_AGENT})
+                            headers={'User-Agent': misc.HTTP_USER_AGENT})
     
     # If Web Server Status Code Not 200(OK) then Return None
     if not response.status_code == 200:

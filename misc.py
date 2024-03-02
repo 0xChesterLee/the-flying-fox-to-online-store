@@ -12,7 +12,7 @@ DELETE_IMAGE_AFTER_RESIZE = True
 IMAGES_FOLDER_NAME = 'images'
 
 # Safari on iOS
-SCRAPE_USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1'
+HTTP_USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1'
 
 # The-Flying-Fox Store Front-end Base URL
 TFF_BASE_FRONTEND_URL = 'https://www.theflyingfox.com.hk'
@@ -35,12 +35,9 @@ DB_REWRITE_TABLE_NAME = 'rewrite_data'
 # OpenAI API Key File Name
 OPENAI_API_KEY_FILE_NAME = '.openai-secret'
 
-# Online Store Secret Login File Name
-CAROUSELL_ACCOUNT_FILE_NAME = '.carousell-secret'
-CAROUSELL_COOKIES_FILE_NAME = 'carousell.cookies.pkl'
-
 # OpenAI Rewrite Prompt
 REWRITE_PROMPT = '請使用繁體中文重寫以下文字，但保留"TITLE:"、"TAGS:"和"BODY:"。"TITLE:"和"BODY:"需要保留70%以上的繁體中文字、"TAGS:"需要保留100%的繁體中文字，並將重寫後的內容輸出。在重寫後的"TAGS:"內容上，根據"BODY:"後的內容額外生成最多6個主題標籤。如果重寫後的"TAGS:"內容為空白，請自行生成最多6個主題標籤，主題標籤不需要加上"#"字符號，但請用逗號分隔。\nTITLE:{0}\nTAGS:{2}\nBODY:{1}'
 
-# Selenium Settings
+# Carousell Settings
 CAROUSELL_BASE_FRONTEND_URL = 'https://www.carousell.com.hk'
+CAROUSELL_COOKIES_FILE_NAME = 'carousell.cookies.pkl'
