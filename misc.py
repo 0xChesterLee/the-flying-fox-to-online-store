@@ -37,6 +37,10 @@ OPENAI_API_KEY_FILE_NAME = '.openai-secret'
 
 # Online Store Secret Login File Name
 CAROUSELL_ACCOUNT_FILE_NAME = '.carousell-secret'
+CAROUSELL_COOKIES_FILE_NAME = 'carousell.cookies.pkl'
 
 # OpenAI Rewrite Prompt
 REWRITE_PROMPT = '請使用繁體中文重寫以下文字，但保留"TITLE:"、"TAGS:"和"BODY:"。"TITLE:"和"BODY:"需要保留70%以上的繁體中文字、"TAGS:"需要保留100%的繁體中文字，並將重寫後的內容輸出。在重寫後的"TAGS:"內容上，根據"BODY:"後的內容額外生成最多6個主題標籤。如果重寫後的"TAGS:"內容為空白，請自行生成最多6個主題標籤，主題標籤不需要加上"#"字符號，但請用逗號分隔。\nTITLE:{0}\nTAGS:{2}\nBODY:{1}'
+
+# Selenium Settings
+CAROUSELL_BASE_FRONTEND_URL = 'https://www.carousell.com.hk'
