@@ -112,5 +112,5 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
     database.json2Database(misc.REWRITE_JSON_FILENAME,misc.DB_REWRITE_TABLE_NAME,'id',True)
     print("Rewrite Database Data Saved.")
 else:
-    print('Param Error.')
-print('Bye.')
+    print('Params Error.')
+print('Good Bye.')
