@@ -192,8 +192,9 @@ def downloadImage(url, fileName):
     # Write Image To File
     with open(fileName, "wb") as file:
         file.write(response.content)
-    print('Image Downloaded: ',baseName)
-    time.sleep(0.5)
+
+    # For Scraping Safe Waiting Time
+    time.sleep(misc.SCRAPE_WAIT_TIME)
 
     return baseName
 
@@ -234,7 +235,6 @@ def convertImage(fileName):
             resizedImage.save(fileName, "JPEG")
         elif extName.endswith(('png')):
             resizedImage.save(fileName, "PNG")
-        print('Image Resized.')
 
     # Define Base File Name For Return
     baseName = os.path.basename(fileName)
