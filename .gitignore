@@ -4,6 +4,7 @@
 .venv-mac
 
 *.pkl
+*.xml
 
 .DS_Store
 
