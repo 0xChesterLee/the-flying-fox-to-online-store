@@ -27,10 +27,14 @@ SCRAPED_JSON_FILENAME = 'ScrapedProductsData.json'
 # Rewrite Products Data JSON File Name
 REWRITE_JSON_FILENAME = 'RewriteProductsData.json'
 
+# Carousell Listed Products Data JSON File Name
+CAROUSELL_JSON_FILENAME = 'CarousellListedProductsData.json'
+
 # System SQLite Database File Name
 DB_FILENAME = 'data.db'
 DB_SCRAPE_TABLE_NAME = 'scrape_data'
 DB_REWRITE_TABLE_NAME = 'rewrite_data'
+DB_CAROUSELL_TABLE_NAME = 'carousell_list'
 
 # OpenAI API Key File Name
 OPENAI_API_KEY_FILE_NAME = '.openai-secret'

@@ -4,6 +4,7 @@ import json
 import scrape
 import database
 import rewriter
+import carousell
 import time
 import os
 import ast
@@ -98,7 +99,7 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             file = os.path.join(os.getcwd(),misc.REWRITE_JSON_FILENAME)
             with open(file, 'w') as file:
                 json.dump(RewriteProductsData, file, indent=4, ensure_ascii=False)
-            print("Rewrite JSON File Saved.")
+            print('Rewrite JSON File Saved.')
 
             # OpenAI Official Rules
             print('[Official Waiting Rules] Waiting For The Next Rewrite, Please Wait...')
@@ -106,11 +107,17 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
     
     # Final Fix JSON File Format and Scraping String Bug etc.
     scrape.finalFixJsonFormat(misc.REWRITE_JSON_FILENAME)
-    print("Final Fixed Rewrite JSON File Saved.")
+    print('Final Fixed Rewrite JSON File Saved.')
     
     # Save Rewrite Data JSON to Database
     database.json2Database(misc.REWRITE_JSON_FILENAME,misc.DB_REWRITE_TABLE_NAME,'id',True)
-    print("Rewrite Database Data Saved.")
+    print('Rewrite Database Data Saved.')
+
+# Carousell
+elif sys.argv[1:][0].upper() == 'CAROUSELL':
+    pass
+    
+
 else:
     print('Params Error.')
 print('Good Bye.')

@@ -1,9 +1,12 @@
 import misc
 import time
 import pickle
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def openWebDriver():
@@ -63,21 +66,54 @@ def loadCookies(driver=webdriver.Chrome):
 
     return True
 
+def sellProduct(productData):
+    id = productData['id']
+    title = productData['title']
+    body = productData['body']
+    tags = productData['tags']
+    vendor = productData['vendor']
+    price = productData['price']
+    images = productData['images']
+    
+    pass
 
 
 
 
-driver = openWebDriver()
+def test():
+    driver = openWebDriver()
 
-# Load Cookies
-loadCookies(driver)
+    # Load Cookies
+    loadCookies(driver)
 
-# Sell Button
-# //*[@id="root"]/div/div/div/div/button
+    # Find The Sell Button And Click
+    xpath = '//*[@id="root"]/div/div/div/div/button'
+    button = driver.find_element(By.XPATH, xpath)
+    if button:
+        # Click Sell Button
+        button.click()
+    else:
+        print(f'{xpath} Not Found.')
+        exit(-1)
 
-print(driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div/div/button'))
+    # Wait until the page finishes loading
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.invisibility_of_element_located((By.ID, 'main')))
+    time.sleep(0.1)
+    # Find The Select Photos And Click
+    xpath = '//*[@id="main"]/div/div[1]/label/input'
+    driver.find_element(By.XPATH, xpath).send_keys(os.path.join(os.getcwd(), 'images/2009824297029.sassy-fascination-water-works-stem-bathtime-sassy-231616.jpg'))
 
-input('Press Enter To Kill The Browser...')
+    input('')
 
-# Close the browser
-closeWebDriver(driver)
+    if button:
+        # Click Upload Button
+        button.click()
+    else:
+        print(f'{xpath} Not Found.')
+        exit(-1)
+
+    input('Press Enter To Kill The Browser...')
+
+    # Close the browser
+    closeWebDriver(driver)

@@ -166,3 +166,19 @@ def updateValue(tableName, column, newValue, condition=None):
         return False
     
     return True
+
+def isTableExists(tableName):
+    conn = sqlite3.connect(misc.DB_FILENAME)
+    cursor = conn.cursor()
+
+    # Query to retrieve table names from the database schema
+    query = "SELECT name FROM sqlite_master WHERE type='table' AND name=?"
+    cursor.execute(query, (tableName,))
+    
+    result = cursor.fetchone()
+    tableExists = result is not None
+
+    cursor.close()
+    conn.close()
+
+    return tableExists
