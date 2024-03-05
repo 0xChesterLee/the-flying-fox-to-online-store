@@ -273,6 +273,15 @@ def finalFixJsonFormat(json_file):
             item['images'] = ast.literal_eval(item['images'])
         except Exception as e:
             pass
+        
+        # Add The Listed Key (listCarousell, listFacebookPage, listFacebookMarket) Into The JSON File
+        if not 'listCarousell' in item:
+            item['listCarousell'] = 0
+        if not 'listFacebookPage' in item:
+            item['listFacebookPage'] = 0
+        if not 'listFacebookMarket' in item:
+            item['listFacebookMarket'] = 0
+
     
     # Write Back To JSON File with Pretty Format
     with open(json_file, 'w', encoding='utf-8') as f:

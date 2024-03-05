@@ -4,6 +4,7 @@ import pickle
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -66,21 +67,17 @@ def loadCookies(driver=webdriver.Chrome):
 
     return True
 
-def sellProduct(productData):
+def listProduct(productData=dict):
+    # Define Product Data
     id = productData['id']
     title = productData['title']
     body = productData['body']
-    tags = productData['tags']
     vendor = productData['vendor']
+    tags = productData['tags']
     price = productData['price']
     images = productData['images']
-    
-    pass
 
-
-
-
-def test():
+    # Init Web Driver
     driver = openWebDriver()
 
     # Load Cookies
@@ -94,26 +91,209 @@ def test():
         button.click()
     else:
         print(f'{xpath} Not Found.')
-        exit(-1)
+        return False
 
     # Wait until the page finishes loading
     wait = WebDriverWait(driver, 10)
     wait.until(EC.invisibility_of_element_located((By.ID, 'main')))
-    time.sleep(0.1)
-    # Find The Select Photos And Click
+    time.sleep(1)
+
+    # Upload Images
     xpath = '//*[@id="main"]/div/div[1]/label/input'
-    driver.find_element(By.XPATH, xpath).send_keys(os.path.join(os.getcwd(), 'images/2009824297029.sassy-fascination-water-works-stem-bathtime-sassy-231616.jpg'))
+    for image in productData['images']:
+        driver.find_element(By.XPATH, xpath).send_keys(image)
+        time.sleep(1)
 
-    input('')
+    # Wait until the page finishes loading
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, 'ReactModalPortal-COLLECTION_PICKER')))
+    time.sleep(1)
 
+    # Collection Picker Step 1 (Everything Else)
+    # //*[@id="main"]/div/div[2]/div[2] (1st)
+    # //*[@id="main"]/div/div[2]/div[3] (2nd)
+    # //*[@id="main"]/div/div[2]/div[32] (Everything Else)
+    xpath = '//*[@id="main"]/div/div[2]/div[32]'
+    button = driver.find_element(By.XPATH, xpath)
     if button:
-        # Click Upload Button
+        # Click
         button.click()
     else:
         print(f'{xpath} Not Found.')
-        exit(-1)
+        return False
+
+    # Wait until the page finishes loading
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, 'ReactModalPortal-COLLECTION_PICKER')))
+    time.sleep(1)
+
+    # Collection Picker Step 2 (Other)
+    cssSelector = '#ReactModalPortal-COLLECTION_PICKER > div > div > div > div > div.M_Mv > div > span > span'
+    button = driver.find_element(By.CSS_SELECTOR, cssSelector)
+    if button:
+        # Click
+        button.click()
+    else:
+        print(f'{cssSelector} Not Found.')
+        return False
+
+    # Wait until the page finishes loading
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.invisibility_of_element_located((By.ID, 'FieldSetField-Container-field_title')))
+    time.sleep(1)
+
+    # Product Title with Tags
+    xpath = '//*[@id="FieldSetField-Container-field_title"]/div/div/div/input'
+    text = driver.find_element(By.XPATH, xpath)
+    if text:
+        # Fill in Product Title Text with Tags
+        text.clear()
+        text.send_keys(f'{title} {tags}')
+        time.sleep(1)
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+    
+    # Wait until the page finishes loading
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.invisibility_of_element_located((By.XPATH, 'FieldSetField-Container-field_condition')))
+    time.sleep(1)
+    
+    # Product Condition (New)
+    xpath = '//*[@id="FieldSetField-Container-field_condition"]/div/div[2]/div/button[1]'
+    button = driver.find_element(By.XPATH, xpath)
+    if button:
+        button.click()
+        time.sleep(1)
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+
+    # Product Price Button (For Sale)
+    xpath = '//*[@id="FieldSetField-Container-field_is_free"]/div/div[2]/div/button[1]'
+    button = driver.find_element(By.XPATH, xpath)
+    if button:
+        try:
+            button.click()
+            time.sleep(1)
+        except Exception as e:
+            print(f'{e}')
+            pass
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+    
+    # Scroll down using the keyboard keys
+    html = driver.find_element(By.TAG_NAME, 'html')
+    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
+    time.sleep(0.1)
+    
+    # Product Price
+    xpath = '//*[@id="FieldSetField-Container-field_price"]/div[1]/div/div/input'
+    text = driver.find_element(By.XPATH, xpath)
+    if text:
+        # Fill in Product Price
+        text.clear()
+        text.send_keys(price)
+        time.sleep(1)
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+
+    # Product Description
+    xpath = '//*[@id="FieldSetField-Container-field_description"]/div/div/div[1]/textarea'
+    text = driver.find_element(By.XPATH, xpath)
+    if text:
+        # Fill in Product Description Body with Tags
+        text.clear()
+        text.send_keys(f'{body}\n{tags}')
+        time.sleep(1)
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+    
+    # Scroll down using the keyboard keys
+    html = driver.find_element(By.TAG_NAME, 'html')
+    html.send_keys(Keys.END)  # Scroll down one page
+    time.sleep(0.1)
+    
+    # Optional Details Show More Button
+    xpath = '//*[@id="main"]/div/form/div[1]/div[5]/div/button'
+    button = driver.find_element(By.XPATH, xpath)
+    if button:
+        button.click()
+        time.sleep(1)
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+
+    # Check Box (I have more than one of the same item)
+    cssSelector = '#FieldSetField-Container-field_multi_quantities > label > svg'
+    button = driver.find_element(By.CSS_SELECTOR, cssSelector)
+    if button:
+        button.click()
+        time.sleep(1)
+    else:
+        print(f'{cssSelector} Not Found.')
+        return False
+    
+    # Check Box (Mailing & Delivery)
+    cssSelector = '#FieldSetField-Container-field_mailing > label > svg'
+    button = driver.find_element(By.CSS_SELECTOR, cssSelector)
+    if button:
+        button.click()
+        time.sleep(1)
+    else:
+        print(f'{cssSelector} Not Found.')
+        return False
+    
+    # Mailing & Delivery Text Description
+    xpath = '//*[@id="FieldSetField-Container-field_mailing_details"]/div/div/div[1]/textarea'
+    text = driver.find_element(By.XPATH, xpath)
+    if text:
+        # Fill in Product Title Text
+        text.clear()
+        text.send_keys(misc.MAILING_AND_DELIVERY_DESCRIPTION)
+        time.sleep(1)
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+
+    # List Now!
+    xpath = '//*[@id="main"]/div/form/div[2]/button'
+    button = driver.find_element(By.XPATH, xpath)
+    if button:
+        button.click()
+        time.sleep(1)
+    else:
+        print(f'{xpath} Not Found.')
+        return False
+
+
+    # For Debug Test
+    input('Press Enter To Do Next...')
+
+    return True
+
+
+
+
+def test():
+    driver = openWebDriver()
+
+    
+
+
+
+
+
+
 
     input('Press Enter To Kill The Browser...')
 
     # Close the browser
     closeWebDriver(driver)
+
+
+
+

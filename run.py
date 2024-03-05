@@ -115,9 +115,50 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
 
 # Carousell
 elif sys.argv[1:][0].upper() == 'CAROUSELL':
-    pass
-    
+    # Open Existing Rewrite Product Data From SQLite
+    productsData = []
+    productsData = database.getValues(misc.DB_REWRITE_TABLE_NAME,
+                                    ['id',
+                                    'originalTitle',
+                                    'title',
+                                    'body',
+                                    'vendor',
+                                    'tags',
+                                    'price',
+                                    'images'],'listCarousell=0', 'id')
+    # Re-Format Part
+    if productsData:
+        for productData in productsData:
+            # Re-Format Product Title Name
+            productData['title'] = f'{productData['title']} / {productData['originalTitle']}'
+            del productData['originalTitle']
 
+            # Re-Format tags as Single String
+            tags = ''
+            if 'tags' in productData:
+                for tag in ast.literal_eval(productData['tags']):
+                    tags = tags + f'#{tag} '
+                tags = tags.rstrip()
+            productData['tags'] = tags
+
+            # Product Discount Rate
+            productData['price'] = float(format(float(productData['price']) * float(misc.PRODUCTS_DISCOUNT_RATE), '.1f'))
+            productData['price'] = int(productData['price'])
+
+            # Re-Format images as Full File Path
+            images = []
+            for image in ast.literal_eval(productData['images']):
+                imagePath = os.path.join(os.getcwd(), f'{misc.IMAGES_FOLDER_NAME}/{image}')
+                images.append(imagePath)
+            productData['images'] = images
+
+            # List Product
+            if carousell.listProduct(productData):
+                # Update listCarousell Status To 1
+                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listCarousell',1,f'id={id}')
+    
+                # Write-Back To The JSON File
+                database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)
 else:
     print('Params Error.')
 print('Good Bye.')

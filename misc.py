@@ -27,14 +27,10 @@ SCRAPED_JSON_FILENAME = 'ScrapedProductsData.json'
 # Rewrite Products Data JSON File Name
 REWRITE_JSON_FILENAME = 'RewriteProductsData.json'
 
-# Carousell Listed Products Data JSON File Name
-CAROUSELL_JSON_FILENAME = 'CarousellListedProductsData.json'
-
 # System SQLite Database File Name
 DB_FILENAME = 'data.db'
 DB_SCRAPE_TABLE_NAME = 'scrape_data'
 DB_REWRITE_TABLE_NAME = 'rewrite_data'
-DB_CAROUSELL_TABLE_NAME = 'carousell_list'
 
 # OpenAI API Key File Name
 OPENAI_API_KEY_FILE_NAME = '.openai-secret'
@@ -45,3 +41,7 @@ REWRITE_PROMPT = '請使用繁體中文重寫以下文字，但保留"TITLE:"、
 # Carousell Settings
 CAROUSELL_BASE_FRONTEND_URL = 'https://www.carousell.com.hk'
 CAROUSELL_COOKIES_FILE_NAME = 'carousell.cookies.pkl'
+
+# Price Settings
+PRODUCTS_DISCOUNT_RATE = 0.85
+MAILING_AND_DELIVERY_DESCRIPTION = '買滿$400以上包送貨，未滿$400運費到付。(只限香港)'
