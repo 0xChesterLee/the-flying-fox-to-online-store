@@ -233,17 +233,11 @@ def listProduct(productData=dict):
         print(f'{xpath} Not Found.')
         return False
 
-    # Scroll down using the keyboard keys
-    html = driver.find_element(By.TAG_NAME, 'html')
-    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
-    time.sleep(1)
-    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
-    time.sleep(1)
-
     # Check Box (I have more than one of the same item)
     cssSelector = '#FieldSetField-Container-field_multi_quantities > label > svg'
     button = driver.find_element(By.CSS_SELECTOR, cssSelector)
     if button:
+        time.sleep(1)
         button.click()
         time.sleep(1)
     else:
