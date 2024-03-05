@@ -153,6 +153,7 @@ elif sys.argv[1:][0].upper() == 'CAROUSELL':
             productData['images'] = images
 
             # List Product
+            print(f'Prepair To List Product {productData['id']} - {productData['title']}')
             if carousell.listProduct(productData):
                 # Update listCarousell Status To 1
                 database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listCarousell',1,f'id={productData['id']}')

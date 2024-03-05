@@ -1,7 +1,7 @@
 import misc
 import time
 import pickle
-import os
+import emoji
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -70,8 +70,8 @@ def loadCookies(driver=webdriver.Chrome):
 def listProduct(productData=dict):
     # Define Product Data
     id = productData['id']
-    title = productData['title']
-    body = productData['body']
+    title = emoji.demojize(productData['title'])
+    body = emoji.demojize(productData['body'])
     vendor = productData['vendor']
     tags = productData['tags']
     price = productData['price']
