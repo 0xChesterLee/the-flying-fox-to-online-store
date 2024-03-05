@@ -96,7 +96,7 @@ def listProduct(productData=dict):
     # Wait until the page finishes loading
     wait = WebDriverWait(driver, 10)
     wait.until(EC.invisibility_of_element_located((By.ID, 'main')))
-    time.sleep(1)
+    time.sleep(3)
 
     # Collection Picker Step 1
     xpath = '//*[@id="main"]/div/div[2]/div[30]' #Everything Else

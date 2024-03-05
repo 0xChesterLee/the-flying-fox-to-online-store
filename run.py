@@ -18,7 +18,9 @@ except Exception as e:
     exit(-1)
 
 # For Scrape
-if sys.argv[1:][0].upper() == 'SCRAPE':
+if sys.argv[1:][0].upper() == 'LOGINCAROUSELL':
+    carousell.loginAndSaveCookies()
+elif sys.argv[1:][0].upper() == 'SCRAPE':
     productsData = []
     for url in scrape.getCollectionsURLs():
         collectionProductsData = scrape.extractCollectionProductsData(url)
