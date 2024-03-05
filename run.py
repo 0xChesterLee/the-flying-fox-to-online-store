@@ -155,7 +155,7 @@ elif sys.argv[1:][0].upper() == 'CAROUSELL':
             # List Product
             if carousell.listProduct(productData):
                 # Update listCarousell Status To 1
-                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listCarousell',1,f'id={id}')
+                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listCarousell',1,f'id={productData['id']}')
     
                 # Write-Back To The JSON File
                 database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)

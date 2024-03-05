@@ -98,22 +98,8 @@ def listProduct(productData=dict):
     wait.until(EC.invisibility_of_element_located((By.ID, 'main')))
     time.sleep(1)
 
-    # Upload Images
-    xpath = '//*[@id="main"]/div/div[1]/label/input'
-    for image in productData['images']:
-        driver.find_element(By.XPATH, xpath).send_keys(image)
-        time.sleep(1)
-
-    # Wait until the page finishes loading
-    wait = WebDriverWait(driver, 10)
-    wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, 'ReactModalPortal-COLLECTION_PICKER')))
-    time.sleep(1)
-
-    # Collection Picker Step 1 (Everything Else)
-    # //*[@id="main"]/div/div[2]/div[2] (1st)
-    # //*[@id="main"]/div/div[2]/div[3] (2nd)
-    # //*[@id="main"]/div/div[2]/div[32] (Everything Else)
-    xpath = '//*[@id="main"]/div/div[2]/div[32]'
+    # Collection Picker Step 1
+    xpath = '//*[@id="main"]/div/div[2]/div[30]' #Everything Else
     button = driver.find_element(By.XPATH, xpath)
     if button:
         # Click
@@ -128,7 +114,7 @@ def listProduct(productData=dict):
     time.sleep(1)
 
     # Collection Picker Step 2 (Other)
-    cssSelector = '#ReactModalPortal-COLLECTION_PICKER > div > div > div > div > div.M_Mv > div > span > span'
+    cssSelector = '#ReactModalPortal-COLLECTION_PICKER > div > div > div > div > div.M_Mv'
     button = driver.find_element(By.CSS_SELECTOR, cssSelector)
     if button:
         # Click
@@ -136,11 +122,27 @@ def listProduct(productData=dict):
     else:
         print(f'{cssSelector} Not Found.')
         return False
+    
+    # Wait until the page finishes loading
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.invisibility_of_element_located((By.XPATH, 'main')))
+    time.sleep(1)
+
+    # Upload Images
+    xpath = '//*[@id="main"]/div/div[1]/label/input'
+    for image in productData['images']:
+        driver.find_element(By.XPATH, xpath).send_keys(image)
+        time.sleep(1)
 
     # Wait until the page finishes loading
     wait = WebDriverWait(driver, 10)
-    wait.until(EC.invisibility_of_element_located((By.ID, 'FieldSetField-Container-field_title')))
+    wait.until(EC.invisibility_of_element_located((By.XPATH, 'FieldSetField-Container-field_title')))
     time.sleep(1)
+
+    # Scroll down using the keyboard keys
+    html = driver.find_element(By.TAG_NAME, 'html')
+    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
+    time.sleep(0.1)
 
     # Product Title with Tags
     xpath = '//*[@id="FieldSetField-Container-field_title"]/div/div/div/input'
@@ -154,30 +156,19 @@ def listProduct(productData=dict):
         print(f'{xpath} Not Found.')
         return False
     
-    # Wait until the page finishes loading
-    wait = WebDriverWait(driver, 10)
-    wait.until(EC.invisibility_of_element_located((By.XPATH, 'FieldSetField-Container-field_condition')))
-    time.sleep(1)
-    
-    # Product Condition (New)
-    xpath = '//*[@id="FieldSetField-Container-field_condition"]/div/div[2]/div/button[1]'
-    button = driver.find_element(By.XPATH, xpath)
-    if button:
-        button.click()
-        time.sleep(1)
-    else:
-        print(f'{xpath} Not Found.')
-        return False
+    # Scroll down using the keyboard keys
+    html = driver.find_element(By.TAG_NAME, 'html')
+    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
+    time.sleep(0.1)
 
     # Product Price Button (For Sale)
-    xpath = '//*[@id="FieldSetField-Container-field_is_free"]/div/div[2]/div/button[1]'
+    xpath = '//*[@id="FieldSetField-Container-field_is_free"]/div/div[2]/div/button[1]/span'
     button = driver.find_element(By.XPATH, xpath)
     if button:
         try:
             button.click()
             time.sleep(1)
         except Exception as e:
-            print(f'{e}')
             pass
     else:
         print(f'{xpath} Not Found.')
@@ -199,6 +190,21 @@ def listProduct(productData=dict):
     else:
         print(f'{xpath} Not Found.')
         return False
+    
+    # Product Condition (New)
+    xpath = '//*[@id="FieldSetField-Container-field_condition"]/div/div[2]/div/button[1]'
+    button = driver.find_element(By.XPATH, xpath)
+    if button:
+        try:
+            button.click()
+            time.sleep(2)
+            button.click()
+        except Exception as e:
+            print(e)
+            pass
+    else:
+        print(f'{cssSelector} Not Found.')
+        return False
 
     # Product Description
     xpath = '//*[@id="FieldSetField-Container-field_description"]/div/div/div[1]/textarea'
@@ -214,7 +220,7 @@ def listProduct(productData=dict):
     
     # Scroll down using the keyboard keys
     html = driver.find_element(By.TAG_NAME, 'html')
-    html.send_keys(Keys.END)  # Scroll down one page
+    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
     time.sleep(0.1)
     
     # Optional Details Show More Button
@@ -222,10 +228,17 @@ def listProduct(productData=dict):
     button = driver.find_element(By.XPATH, xpath)
     if button:
         button.click()
-        time.sleep(1)
+        time.sleep(2)
     else:
         print(f'{xpath} Not Found.')
         return False
+
+    # Scroll down using the keyboard keys
+    html = driver.find_element(By.TAG_NAME, 'html')
+    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
+    time.sleep(1)
+    html.send_keys(Keys.PAGE_DOWN)  # Scroll down one page
+    time.sleep(1)
 
     # Check Box (I have more than one of the same item)
     cssSelector = '#FieldSetField-Container-field_multi_quantities > label > svg'
@@ -258,6 +271,11 @@ def listProduct(productData=dict):
     else:
         print(f'{xpath} Not Found.')
         return False
+    
+    # Scroll down using the keyboard keys
+    html = driver.find_element(By.TAG_NAME, 'html')
+    html.send_keys(Keys.END)  # Scroll down one page
+    time.sleep(0.1)
 
     # List Now!
     xpath = '//*[@id="main"]/div/form/div[2]/button'
@@ -268,32 +286,14 @@ def listProduct(productData=dict):
     else:
         print(f'{xpath} Not Found.')
         return False
-
-
-    # For Debug Test
-    input('Press Enter To Do Next...')
-
-    return True
-
-
-
-
-def test():
-    driver = openWebDriver()
-
     
+    # Wait For List Upload
+    time.sleep(10)
+    print(f'Listed On Carousell: {title}')
 
-
-
-
-
-
-
-    input('Press Enter To Kill The Browser...')
+    # input('Press Enter To Do Next...')
 
     # Close the browser
     closeWebDriver(driver)
 
-
-
-
+    return True
