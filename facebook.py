@@ -10,7 +10,7 @@ import requests
 with open(misc.FACEBOOK_TOKEN_FILE_NAME, 'r') as file:
     facebookToken = file.read().strip()
 
-msg = 'Purple Ombre Bob Lace Wig Natural Human Hair now available on https://lace-wigs.co.za/'
+msg = 'Test123'
 post_url = f'https://graph.facebook.com/{misc.FACEBOOK_PAGE_ID}/feed'
 
 payload = {
