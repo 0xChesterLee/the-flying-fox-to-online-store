@@ -1,12 +1,8 @@
 import misc
+import uploader
 import json
 import requests
-import cloudinary
-import cloudinary.uploader
 
-
-def uploadImageToFacebook(filePath=str):
-    pass
 
 def postProduct(productData=dict):
     # Define Product Data
@@ -23,6 +19,3 @@ def postProduct(productData=dict):
     message = ''
 
     return True
-
-
-
