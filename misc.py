@@ -41,7 +41,10 @@ REWRITE_PROMPT = '請使用繁體中文重寫以下文字，但保留"TITLE:"、
 # Carousell Settings
 CAROUSELL_BASE_FRONTEND_URL = 'https://www.carousell.com.hk'
 CAROUSELL_COOKIES_FILE_NAME = 'carousell.cookies.pkl'
+MAILING_AND_DELIVERY_DESCRIPTION = '買滿$400以上包送貨，未滿$400運費到付。(只限香港)'
 
 # Price Settings
 PRODUCTS_DISCOUNT_RATE = 0.85
-MAILING_AND_DELIVERY_DESCRIPTION = '買滿$400以上包送貨，未滿$400運費到付。(只限香港)'
+
+# Facebook Page Settings
+FACEBOOK_PAGE_ID = 275521235637171
