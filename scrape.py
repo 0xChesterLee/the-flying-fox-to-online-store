@@ -91,7 +91,7 @@ def extractCollectionProductsData(url):
             images.append(fileName)
 
         # Get The Rewrite Status
-        if database.getValues(misc.DB_SCRAPE_TABLE_NAME,['rewrite'],f'id={data['id']}','id') == []:
+        if database.getValues(misc.DB_SCRAPE_TABLE_NAME,['rewrite'],f"id={data['id']}",'id') == []:
             rewrite = 0
         else:
             rewrite = 1
@@ -117,7 +117,7 @@ def extractCollectionProductsData(url):
         ProductData = fixBodyHTML(ProductData)
 
         # Print Out The Data What We're Scraping
-        print(f'Scraping Product ID: {ProductData['id']} - {ProductData['title']}')
+        print(f"Scraping Product ID: {ProductData['id']} - {ProductData['title']}")
 
         # Append List
         collectionProductsData.append(ProductData)

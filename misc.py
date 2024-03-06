@@ -51,7 +51,7 @@ FACEBOOK_PAGE_ID = 275521235637171
 
 # Facebook Page Access Token File Name And Endpoint URL
 FACEBOOK_TOKEN_FILE_NAME = '.facebook-secret'
-FACEBOOK_POST_ENDPOINT_URL = f'https://graph.facebook.com/{FACEBOOK_PAGE_ID}/feed'
+FACEBOOK_POST_ENDPOINT_URL = f"https://graph.facebook.com/{FACEBOOK_PAGE_ID}/feed"
 
 # Cloudinary Access Information File Name
 CLOUDINARY_ACCESS_INFO_FILE_NAME = '.cloudinary-secret'

@@ -14,8 +14,11 @@ def postProduct(productData=dict):
     price = productData['price']
     images = productData['images']
 
-
+    print(images)
 
     message = ''
 
+    input('Press Enter To Do Next...')
+    
+    return False
     return True

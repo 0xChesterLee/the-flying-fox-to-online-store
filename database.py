@@ -21,7 +21,7 @@ def json2Database(jsonFileName, tableName, primaryKey, isDropTable):
 
     # Drop the table if it already exists
     if bool(isDropTable):
-        cursor.execute(f'DROP TABLE IF EXISTS {tableName}')
+        cursor.execute(f"DROP TABLE IF EXISTS {tableName}")
 
     # Extract the keys from the first JSON object to determine the column names
     keys = list(data[0].keys())
@@ -36,7 +36,7 @@ def json2Database(jsonFileName, tableName, primaryKey, isDropTable):
     # Insert the data into the table
     for item in data:
         # Generate the INSERT statement dynamically
-        insert_query = f'INSERT INTO {tableName} ({', '.join(keys)}) VALUES ({', '.join(['?'] * len(keys))})'
+        insert_query = f"INSERT INTO {tableName} ({', '.join(keys)}) VALUES ({', '.join(['?'] * len(keys))})"
         
         # Convert any lists to a string representation
         values = [str(item[key]) if isinstance(item[key], list) else item[key] for key in keys]
@@ -65,7 +65,7 @@ def database2JSON(tableName, jsonFileName):
     cursor = conn.cursor()
     
     # Fetch all rows from the table
-    cursor.execute(f'SELECT * FROM {tableName}')
+    cursor.execute(f"SELECT * FROM {tableName}")
     rows = cursor.fetchall()
     
     # Get column names from the cursor description
@@ -103,11 +103,11 @@ def getValues(tableName, columns, condition=None, groupBy=None):
         columns_str = ', '.join(columns)
         
         # Build the SELECT query with the column names and condition
-        select_query = f'SELECT {columns_str} FROM {tableName}'
+        select_query = f"SELECT {columns_str} FROM {tableName}"
         if condition:
-            select_query += f' WHERE {condition}'
+            select_query += f" WHERE {condition}"
         if groupBy:
-            select_query += f' GROUP BY {groupBy}'
+            select_query += f" GROUP BY {groupBy}"
         
         # Execute the SELECT query
         cursor.execute(select_query)
@@ -149,7 +149,7 @@ def updateValue(tableName, column, newValue, condition=None):
         cursor = conn.cursor()
         
         # Build the UPDATE query with the column, new value, and condition
-        update_query = f'UPDATE {tableName} SET {column} = ?'
+        update_query = f"UPDATE {tableName} SET {column} = ?"
         update_params = (newValue,)
         if condition:
             update_query += f" WHERE {condition}"

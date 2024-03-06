@@ -13,7 +13,7 @@ import ast
 
 # Main Program
 try:
-    print(f'Program Start With Params: {sys.argv[1:][0]}')
+    print(f"Program Start With Params: {sys.argv[1:][0]}")
 except Exception as e:
     print('No Program Params.')
     exit(-1)
@@ -73,12 +73,12 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             images = productData['images']
 
             # Use AI Rewriter To Rewrite The Product Information
-            print(f'Prepair To Rewrite {id}:{originalTitle}\n')
+            print(f"Prepair To Rewrite {id}:{originalTitle}\n")
             data = rewriter.productRewriter(originalTitle, originalBody, originalTags)
             title = data['title']
             body = data['body']
             tags = data['tags']
-            print(f'Rewrited Product Information ({id}) - ({title}) - ({tags})\n\n{body}\n\n\n\n')
+            print(f"Rewrited Product Information ({id}) - ({title}) - ({tags})\n\n{body}\n\n\n\n")
 
             # Define Product Data Dict
             ProductData = {'id': id,
@@ -96,7 +96,7 @@ elif sys.argv[1:][0].upper() == 'REWRITE':
             RewriteProductsData.append(ProductData)
 
             # Update Rewrite Status To 1
-            database.updateValue(misc.DB_SCRAPE_TABLE_NAME,'rewrite',1,f'id={id}')
+            database.updateValue(misc.DB_SCRAPE_TABLE_NAME,'rewrite',1,f"id={id}")
 
             # Save Rewrite Product Data to a JSON file
             file = os.path.join(os.getcwd(),misc.REWRITE_JSON_FILENAME)
@@ -133,14 +133,14 @@ elif sys.argv[1:][0].upper() == 'CAROUSELL':
     if productsData:
         for productData in productsData:
             # Re-Format Product Title Name
-            productData['title'] = f'{productData['title']} / {productData['originalTitle']}'
+            productData['title'] = f"{productData['title']} / {productData['originalTitle']}"
             del productData['originalTitle']
 
             # Re-Format tags as Single String
             tags = ''
             if 'tags' in productData:
                 for tag in ast.literal_eval(productData['tags']):
-                    tags = tags + f'#{tag} '
+                    tags = tags + f"#{tag} "
                 tags = tags.rstrip()
             productData['tags'] = tags
 
@@ -151,15 +151,15 @@ elif sys.argv[1:][0].upper() == 'CAROUSELL':
             # Re-Format images as Full File Path
             images = []
             for image in ast.literal_eval(productData['images']):
-                imagePath = os.path.join(os.getcwd(), f'{misc.IMAGES_FOLDER_NAME}/{image}')
+                imagePath = os.path.join(os.getcwd(), f"{misc.IMAGES_FOLDER_NAME}/{image}")
                 images.append(imagePath)
             productData['images'] = images
 
             # List Product
-            print(f'Prepair To List Product To Carousell {productData['id']} - {productData['title']}')
+            print(f"Prepair To List Product To Carousell {productData['id']} - {productData['title']}")
             if carousell.listProduct(productData):
                 # Update listCarousell Status To 1
-                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listCarousell',1,f'id={productData['id']}')
+                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listCarousell',1,f"id={productData['id']}")
     
                 # Write-Back To The JSON File
                 database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)
@@ -175,19 +175,19 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
                                     'vendor',
                                     'tags',
                                     'price',
-                                    'images'],'listCarousell=0', 'id')
+                                    'images'],'listFacebookPage=0', 'id')
     # Re-Format Part
     if productsData:
         for productData in productsData:
             # Re-Format Product Title Name
-            productData['title'] = f'{productData['title']} / {productData['originalTitle']}'
+            productData['title'] = f"{productData['title']} / {productData['originalTitle']}"
             del productData['originalTitle']
 
             # Re-Format tags as Single String
             tags = ''
             if 'tags' in productData:
                 for tag in ast.literal_eval(productData['tags']):
-                    tags = tags + f'#{tag} '
+                    tags = tags + f"#{tag} "
                 tags = tags.rstrip()
             productData['tags'] = tags
 
@@ -198,15 +198,15 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
             # Re-Format images as Full File Path
             images = []
             for image in ast.literal_eval(productData['images']):
-                imagePath = os.path.join(os.getcwd(), f'{misc.IMAGES_FOLDER_NAME}/{image}')
+                imagePath = os.path.join(os.getcwd(), f"{misc.IMAGES_FOLDER_NAME}/{image}")
                 images.append(imagePath)
             productData['images'] = images
 
             # List Product
-            print(f'Prepair To List Product To Facebook Page {productData['id']} - {productData['title']}')
+            print(f"repair To List Product To Facebook Page {productData['id']} - {productData['title']}")
             if facebook.postProduct(productData):
                 # Update listFacebookPage Status To 1
-                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listFacebookPage',1,f'id={productData['id']}')
+                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listFacebookPage',1,f"id={productData['id']}")
     
                 # Write-Back To The JSON File
                 database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)
