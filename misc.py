@@ -46,5 +46,8 @@ MAILING_AND_DELIVERY_DESCRIPTION = '買滿$400以上包送貨，未滿$400運費
 # Price Settings
 PRODUCTS_DISCOUNT_RATE = 0.85
 
+# Facebook Page Access Token File Name
+FACEBOOK_TOKEN_FILE_NAME = '.facebook-secret'
+
 # Facebook Page Settings
 FACEBOOK_PAGE_ID = 275521235637171
