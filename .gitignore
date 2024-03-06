@@ -1,5 +1,6 @@
 .openai-secret
 .facebook-secret
+.cloudinary-secret
 
 .venv-win
 .venv-mac
