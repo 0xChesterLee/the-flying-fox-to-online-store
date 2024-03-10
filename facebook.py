@@ -34,9 +34,9 @@ def postProduct(productData=dict):
         image_url = uploader.upload_image(image)
         if 'https' in image_url:
             images_url.append(image_url)
-            # For Safe
-            time.sleep(0.5)
-    print(f"Uploaded Images To Cloudinary.")
+            time.sleep(0.1) # For Safe
+        else:
+            print(f"Failed Uploaded Images To Cloudinary.")
     
     # Post Images To Facebook First To Get Images IDs First
     photoIDs = []
@@ -55,7 +55,6 @@ def postProduct(productData=dict):
         else:
             print(f"Error To Get Photo IDs, Facebook Web Response Code: {response.status_code}")
             return False
-    print(f"Facebook Images IDs({photoIDs}) Prepair OK.")
 
     # Post Message To Facebook Page with Photo IDs
     vendor = str('#' + str(vendor).strip())
@@ -68,26 +67,25 @@ def postProduct(productData=dict):
     # Add The Photo IDs into Requests Post Data
     for i, photoID in enumerate(photoIDs, start=1):
         data[f'attached_media[{i}]'] = f'{{"media_fbid":"{photoID}"}}'
-
     # Do The Post Requests to META Server
     response = requests.post(misc.FACEBOOK_PAGE_POST_ENDPOINT_URL,
                              data=data,
                              headers={'Authorization': f"Bearer {accessToken}"})
     response = response.json()
     # Print the Final Post Results
+    print(response)
     if 'id' in response:
         print(f"Facebook Page Post Successfully with ID Returned: {response['id']}")
     else:
-        print('Facebook Page Post Failed.')
+        print('ERROR: Facebook Page Post Failed.')
         return False
     
     # Delete And CleanUp Images From Cloudinary
-    print(f"Cleaning-Up Cloudinary Images...")
     for image_url in images_url:
         if not uploader.delete(image_url):
             print(f"Clean Up {image_url} Failed.")
 
     # For Safe
-    time.sleep(5)
+    time.sleep(60)
     #input('Press Enter To Do Next...')
     return True
