@@ -184,7 +184,7 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
     if productsData:
         for productData in productsData:
             # Re-Format Product Title Name
-            productData['title'] = f"{productData['title']} / {productData['originalTitle']}"
+            productData['title'] = f"{str(productData['title']).strip()} / {str(productData['originalTitle']).strip()}"
             del productData['originalTitle']
 
             # Re-Format tags as Single String
@@ -211,10 +211,10 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
             print(f"repair To List Product To Facebook Page {productData['id']} - {productData['title']}")
             if facebook.postProduct(productData):
                 # Update listFacebookPage Status To 1
-                #database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listFacebookPage',1,f"id={productData['id']}")
+                database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listFacebookPage',1,f"id={productData['id']}")
     
                 # Write-Back To The JSON File
-                #database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)
+                database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)
                 pass
 
 else:

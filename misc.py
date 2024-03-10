@@ -46,12 +46,11 @@ MAILING_AND_DELIVERY_DESCRIPTION = '買滿$400以上包送貨，未滿$400運費
 # Price Settings
 PRODUCTS_DISCOUNT_RATE = 0.85
 
-# Facebook Page Settings
-FACEBOOK_PAGE_ID = 275521235637171
-
 # Facebook Page Access Token File Name And Endpoint URL
 FACEBOOK_TOKEN_FILE_NAME = 'secret/.facebook-secret'
-FACEBOOK_POST_ENDPOINT_URL = f"https://graph.facebook.com/{FACEBOOK_PAGE_ID}/feed"
+FACEBOOK_PAGE_ID = 275521235637171
+FACEBOOK_PAGE_PHOTO_ENDPOINT_URL = f"https://graph.facebook.com/{FACEBOOK_PAGE_ID}/photos"
+FACEBOOK_PAGE_POST_ENDPOINT_URL = f"https://graph.facebook.com/{FACEBOOK_PAGE_ID}/feed"
 
 # Cloudinary Access Information File Name
 CLOUDINARY_ACCESS_INFO_FILE_NAME = 'secret/.cloudinary-secret'
