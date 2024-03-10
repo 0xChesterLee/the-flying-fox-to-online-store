@@ -184,7 +184,7 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
     if productsData:
         for productData in productsData:
             # Re-Format Product Title Name
-            productData['title'] = f"{str(productData['title']).strip()} / {str(productData['originalTitle']).strip()}"
+            productData['title'] = f"{str(productData['title']).strip()}\n{str(productData['originalTitle']).strip()}"
             del productData['originalTitle']
 
             # Re-Format tags as Single String
