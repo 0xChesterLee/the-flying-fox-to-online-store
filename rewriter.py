@@ -23,6 +23,9 @@ def extractContentFromOpenAI(text):
         elif is_body:
             body += line.strip()
 
+    # Re-Format Remove tags Bug Fix (產品類型_)
+    tags = str(tags).replace('產品類型_', '')
+
     return title, body, tags
 
 

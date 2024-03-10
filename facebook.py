@@ -1,7 +1,9 @@
 import misc
 import uploader
 import json
+import ast
 import requests
+import time
 
 
 def postProduct(productData=dict):
@@ -14,11 +16,26 @@ def postProduct(productData=dict):
     price = productData['price']
     images = productData['images']
 
-    print(images)
+    print(id, title, body, vendor, tags, price, images)
 
-    message = ''
+    # Tags
+    print(tags)
+    exit(-1)
+
+    # Upload Images To Cloudinary First
+    images_url = []
+    for image in images:
+        image_url = uploader.upload_image(image)
+        if 'https' in image_url:
+            images_url.append(image_url)
+            # For Safe
+            time.sleep(0.5)
+    
+    
+
+
 
     input('Press Enter To Do Next...')
-    
-    return False
+
+    return False # Debug
     return True
