@@ -24,8 +24,9 @@ def openWebDriver():
     return driver
 
 def closeWebDriver(driver=webdriver.Chrome):
+    _driver = webdriver.Chrome
     # Close the Web Driver (Browser Windows)
-    driver.close()
+    _driver.close(driver)
     return True
 
 def loadWebDriverOptions():
@@ -50,7 +51,7 @@ def loginAndSaveCookies():
     print(f'Cookies Saved: {misc.CAROUSELL_COOKIES_FILE_NAME}')
 
     # Close the Web Driver
-    closeWebDriver()
+    closeWebDriver(driver)
 
 def loadCookies(driver=webdriver.Chrome):
     # Load Cookies From File
