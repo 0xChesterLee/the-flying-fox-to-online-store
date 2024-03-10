@@ -19,8 +19,8 @@ def postProduct(productData=dict):
     print(id, title, body, vendor, tags, price, images)
 
     # Tags
-    print(tags)
-    exit(-1)
+    #print(tags)
+    return True
 
     # Upload Images To Cloudinary First
     images_url = []

@@ -140,6 +140,7 @@ elif sys.argv[1:][0].upper() == 'CAROUSELL':
             tags = ''
             if 'tags' in productData:
                 for tag in ast.literal_eval(productData['tags']):
+                    tag = str(tag).replace('產品類型_','')
                     tags = tags + f"#{tag} "
                 tags = tags.rstrip()
             productData['tags'] = tags
@@ -190,6 +191,7 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
             tags = ''
             if 'tags' in productData:
                 for tag in ast.literal_eval(productData['tags']):
+                    tag = str(tag).replace('產品類型_','')
                     tags = tags + f"#{tag} "
                 tags = tags.rstrip()
             productData['tags'] = tags
@@ -204,9 +206,6 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
                 imagePath = os.path.join(os.getcwd(), f"{misc.IMAGES_FOLDER_NAME}/{image}")
                 images.append(imagePath)
             productData['images'] = images
-
-            # Re-Format Remove tags Bug Fix (產品類型_)
-            productData['tags'] = str(productData['tags']).replace('產品類型_', '')
 
             # List Product (Working On It.)
             print(f"repair To List Product To Facebook Page {productData['id']} - {productData['title']}")
