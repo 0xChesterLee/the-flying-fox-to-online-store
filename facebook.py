@@ -54,6 +54,7 @@ def postProduct(productData=dict):
                 photoIDs.append(response['id'])
         else:
             print(f"Error To Get Photo IDs, Facebook Web Response Code: {response.status_code}")
+            return False
     print(f"Facebook Images IDs({photoIDs}) Prepair OK.")
 
     # Post Message To Facebook Page with Photo IDs
@@ -78,6 +79,7 @@ def postProduct(productData=dict):
         print(f"Facebook Page Post Successfully with ID Returned: {response['id']}")
     else:
         print('Facebook Page Post Failed.')
+        return False
     
     # Delete And CleanUp Images From Cloudinary
     print(f"Cleaning-Up Cloudinary Images...")

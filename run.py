@@ -208,7 +208,7 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
             productData['images'] = images
 
             # List Product
-            print(f"repair To List Product To Facebook Page {productData['id']} - {productData['title']}")
+            print(f"Prepair To List Product To Facebook Page {productData['id']} - {productData['title']}")
             if facebook.postProduct(productData):
                 # Update listFacebookPage Status To 1
                 database.updateValue(misc.DB_REWRITE_TABLE_NAME,'listFacebookPage',1,f"id={productData['id']}")
