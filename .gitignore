@@ -1,11 +1,11 @@
+# venv Folders
 .venv-win
 .venv-mac
 
+# Tokens / Keys / Cookies Files
 secret/
 
-*.pkl
-*.xml
-
+# Mac-OS Only
 .DS_Store
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
