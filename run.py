@@ -215,7 +215,7 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
     
                 # Write-Back To The JSON File
                 database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)
-                pass
+            exit(-1)
 
 else:
     print('Params Error.')
