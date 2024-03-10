@@ -215,6 +215,9 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
     
                 # Write-Back To The JSON File
                 database.database2JSON(misc.DB_REWRITE_TABLE_NAME,misc.REWRITE_JSON_FILENAME)
+            
+            # For Facebook API Safe
+            time.sleep(misc.FACEBOOK_PAGE_POST_WAIT_TIME)
 else:
     print('Params Error.')
 print('Good Bye.')

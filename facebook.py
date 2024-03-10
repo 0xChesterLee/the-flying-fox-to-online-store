@@ -59,7 +59,7 @@ def postProduct(productData=dict):
     # Post Message To Facebook Page with Photo IDs
     vendor = str('#' + str(vendor).strip())
     price = str('HK$' + str(price))
-    message = f"{title}\n\n\n品牌：{vendor}\n\n\n產品介紹：\n{body}\n\n\n價錢：{price}\n\n\n\n{misc.MAILING_AND_DELIVERY_DESCRIPTION}\n\n\n\n{'https://www.carousell.com.hk/u/thebabyshark/'}\n\n\n\n{tags}"
+    message = f"{title}\n\n\n品牌：{vendor}\n\n\n產品介紹：\n{body}\n\n\n價錢：{price}\n\n\n\n{'**'+misc.MAILING_AND_DELIVERY_DESCRIPTION}\n\n\n\n{'https://www.carousell.com.hk/u/thebabyshark/'}\n\n\n\n{tags}"
     data = {
         'message': message,
         'published': True
@@ -84,7 +84,4 @@ def postProduct(productData=dict):
         if not uploader.delete(image_url):
             print(f"Clean Up {image_url} Failed.")
 
-    # For Safe
-    time.sleep(60)
-    #input('Press Enter To Do Next...')
     return True

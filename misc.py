@@ -51,6 +51,7 @@ FACEBOOK_TOKEN_FILE_NAME = 'secret/.facebook-secret'
 FACEBOOK_PAGE_ID = 275521235637171
 FACEBOOK_PAGE_PHOTO_ENDPOINT_URL = f"https://graph.facebook.com/{FACEBOOK_PAGE_ID}/photos"
 FACEBOOK_PAGE_POST_ENDPOINT_URL = f"https://graph.facebook.com/{FACEBOOK_PAGE_ID}/feed"
+FACEBOOK_PAGE_POST_WAIT_TIME = 60
 
 # Cloudinary Access Information File Name
 CLOUDINARY_ACCESS_INFO_FILE_NAME = 'secret/.cloudinary-secret'
