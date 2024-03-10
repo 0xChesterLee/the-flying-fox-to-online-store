@@ -4,6 +4,7 @@ import json
 import ast
 import requests
 import time
+import re
 
 
 def postProduct(productData=dict):
@@ -15,6 +16,10 @@ def postProduct(productData=dict):
     tags = productData['tags']
     price = productData['price']
     images = productData['images']
+
+    # Re-Format vendor, tags
+    vendor = str(vendor).replace(' ','') # Remove the Space in Vendor string
+    tags = re.sub(r'(#\w+)\s+', r'\1', tags) # Remove the Space inside the hash tag
 
     # Get Meta Access Token From File
     accessToken = ''
