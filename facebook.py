@@ -85,5 +85,7 @@ def postProduct(productData=dict):
         if not uploader.delete(image_url):
             print(f"Clean Up {image_url} Failed.")
 
+    # For Safe
+    time.sleep(5)
     #input('Press Enter To Do Next...')
     return True
