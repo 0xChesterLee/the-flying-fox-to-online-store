@@ -73,7 +73,6 @@ def postProduct(productData=dict):
                              headers={'Authorization': f"Bearer {accessToken}"})
     response = response.json()
     # Print the Final Post Results
-    print(response)
     if 'id' in response:
         print(f"Facebook Page Post Successfully with ID Returned: {response['id']}")
     else:
