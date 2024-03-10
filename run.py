@@ -207,7 +207,7 @@ elif sys.argv[1:][0].upper() == 'FACEBOOK_PAGE':
                 images.append(imagePath)
             productData['images'] = images
 
-            # List Product (Working On It.)
+            # List Product
             print(f"repair To List Product To Facebook Page {productData['id']} - {productData['title']}")
             if facebook.postProduct(productData):
                 # Update listFacebookPage Status To 1
